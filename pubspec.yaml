@@ -15,6 +15,10 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   get: ^4.6.6
+  step_progress_indicator: ^1.0.2
+  simple_speed_dial: ^0.1.7
+  flutter_speed_dial: ^7.0.0
+  flutter_svg: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -31,18 +35,25 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/images/persona.png
-
+    - assets/images/man.png
+    - assets/images/cyberbullying.png
+    - assets/images/negligencia.png
+    - assets/images/toque.png
+    - assets/images/segredo.png
+    - assets/images/persona.svg
   fonts:
     - family: BalooThambi
       fonts:
         - asset: assets/fonts/BalooThambi-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+        - asset: assets/fonts/BalooBhaijaan.ttf
+        - asset: assets/fonts/AbhayaLibre-ExtraBold.ttf
+        - asset: assets/fonts/Inter-Regular.otf
+    - family: BalooBhaijaan
+      fonts:
+        - asset: assets/fonts/BalooBhaijaan.ttf
+    - family: InriaSans
+      fonts:
+        - asset: assets/fonts/inria-sans.regular.ttf
+    - family: AbhayaLibre-ExtraBold
+      fonts:
+        - asset: assets/fonts/AbhayaLibre-ExtraBold.ttf
