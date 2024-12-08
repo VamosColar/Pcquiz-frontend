@@ -26,15 +26,22 @@ class QuizController extends GetxController {
 
   void checkAnswer(BuildContext context, int selectedIndex) {
     final currentQuestionIndex = questionIndex.value;
+
+    if (isShowingFeedback.value) return;
     isShowingFeedback.value = true;
 
-    if (selectedIndex == questions[currentQuestionIndex].correctAnswerIndex) {
+    final question = questions[currentQuestionIndex];
+
+    if (selectedIndex == question.correctAnswerIndex) {
       score.value++;
-      explanation.value = questions[currentQuestionIndex].explanation;
+      explanation.value = question.explanation;
       showFeedbackDialog(context, true, "Correto!", explanation.value);
+      // redireciona para o próximo diálogo
+      Future.delayed(const Duration(seconds: 3), () {
+        showNextPhaseDialog(context);
+      });
     } else {
-      explanation.value =
-          questions[currentQuestionIndex].incorrectExplanations[selectedIndex];
+      explanation.value = question.options[selectedIndex].explanation;
       showFeedbackDialog(context, false, "Tente novamente!", explanation.value);
     }
   }
@@ -90,16 +97,17 @@ class QuizController extends GetxController {
           ),
         );
       },
-    );
+    ).then((_) {
+      // Reseta `isShowingFeedback` quando o diálogo é fechado
+      isShowingFeedback.value = false;
 
-    if (isCorrect) {
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.of(context).pop(); // Fecha o primeiro diálogo
-
-        // Exibe o diálogo para a próxima fase
-        showNextPhaseDialog(context);
-      });
-    }
+      if (isCorrect) {
+        // Aguarda um pouco antes de exibir o próximo diálogo (se necessário)
+        Future.delayed(const Duration(milliseconds: 300), () {
+          showNextPhaseDialog(context);
+        });
+      }
+    });
   }
 
   void showNextPhaseDialog(BuildContext context) {
@@ -129,7 +137,7 @@ class QuizController extends GetxController {
               // Gera as estrelas com base no score
               Wrap(
                 alignment: WrapAlignment.center,
-                spacing: 8.0,
+                spacing: 6.0,
                 children: List.generate(
                   score.value, // Baseado no score atual
                   (index) => const Icon(
@@ -221,6 +229,7 @@ class QuizController extends GetxController {
       questionIndex.value++;
       isShowingFeedback.value = false; // Reset feedback da proxima questao
     } else {
+      quizCompleted.value = true; // Marca o quiz como concluído
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

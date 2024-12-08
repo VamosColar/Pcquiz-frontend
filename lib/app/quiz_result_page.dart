@@ -16,7 +16,7 @@ class QuizResultPage extends StatelessWidget {
       },
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        floatingActionButton: const CustomBtnSpeedDial(), // settings
+        floatingActionButton: const CustomBtnSpeedDial(),
         backgroundColor: Colors.transparent,
         body: Container(
           decoration: const BoxDecoration(
@@ -71,26 +71,6 @@ class QuizResultPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Icon(Icons.star,
-                                  color: Colors.amber,
-                                  size: 40,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 2.0,
-                                      color: Colors.white,
-                                      offset: Offset(1, 2),
-                                    ),
-                                  ]),
-                              const Icon(Icons.star,
-                                  color: Colors.amber,
-                                  size: 40,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 2.0,
-                                      color: Colors.white,
-                                      offset: Offset(1, 2),
-                                    ),
-                                  ]),
                               const Icon(
                                 Icons.star,
                                 color: Colors.amber,
@@ -103,19 +83,43 @@ class QuizResultPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Icon(Icons.star,
-                                  color: Colors.amber,
-                                  size: 40,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 2.0,
-                                      color: Colors.white,
-                                      offset: Offset(1, 2),
-                                    ),
-                                  ]),
-                              const SizedBox(
-                                width: 4,
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 40,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 2.0,
+                                    color: Colors.white,
+                                    offset: Offset(1, 2),
+                                  ),
+                                ],
                               ),
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 40,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 2.0,
+                                    color: Colors.white,
+                                    offset: Offset(1, 2),
+                                  ),
+                                ],
+                              ),
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 40,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 2.0,
+                                    color: Colors.white,
+                                    offset: Offset(1, 2),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 4),
                               Flexible(
                                 child: Row(
                                   children: [
@@ -141,32 +145,55 @@ class QuizResultPage extends StatelessWidget {
                           width: 4.0,
                         ),
                       ),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Se você suspeita de violência contra crianças ou adolescentes, ligue para:\nDisque 100 - Disque Direitos Humanos\nDisque 190 - Polícia Militar',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF332C24),
+                          RichText(
+                            text: const TextSpan(
+                              text:
+                                  'Se você suspeita de violência contra crianças ou adolescentes, ligue para:\n',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF332C24),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Disque 100',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                TextSpan(text: ' - Disque Direitos Humanos\n'),
+                                TextSpan(
+                                  text: 'Disque 190',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                TextSpan(text: ' - Polícia Militar'),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 20),
-                          Text(
-                            'Dicas importantes:\n• Sempre confie em seus instintos\n• Não tenha medo de pedir ajuda\n• Sua segurança é a prioridade número um!',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF332C24),
+                          const SizedBox(height: 20),
+                          RichText(
+                            text: const TextSpan(
+                              text: 'Dicas importantes:\n',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF332C24),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: '• Sempre confie em seus instintos\n'
+                                      '• Não tenha medo de pedir ajuda\n'
+                                      '• Sua segurança é a prioridade número um!',
+                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Text(
+                          const SizedBox(height: 10),
+                          const Text(
                             'Juntos, podemos criar um mundo mais seguro para todos!',
                             textAlign: TextAlign.start,
                             style: TextStyle(

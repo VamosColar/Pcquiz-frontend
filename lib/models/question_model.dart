@@ -1,24 +1,31 @@
 class Question {
   final String title;
   final String fase;
-  final String mission; //tema da fase
-  final String explanation; // Explicação para respostas correta
-  final String imagePath; // Caminho para a imagem da fase
-  final List<String>
-      incorrectExplanations; // Lista de explicações das respostas incorretas
-
-  final List<String> options;
+  final String mission;
+  final String explanation; // Explicação correta
+  final String imagePath;
+  final List<OptionWithExplanation>
+      options; // Nova estrutura para vincular opções e explicações
   final int correctAnswerIndex;
-  bool hasAnswered = false;
 
   Question({
     required this.title,
     required this.fase,
     required this.mission,
     required this.explanation,
-    required this.incorrectExplanations,
-    required this.options,
     required this.imagePath,
+    required this.options,
     required this.correctAnswerIndex,
+    bool hasAnswered = false,
+  });
+}
+
+class OptionWithExplanation {
+  final String option; // Texto da opção
+  final String explanation; // Explicação associada
+
+  OptionWithExplanation({
+    required this.option,
+    required this.explanation,
   });
 }

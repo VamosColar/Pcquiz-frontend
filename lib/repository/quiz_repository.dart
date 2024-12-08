@@ -4,7 +4,6 @@ class QuizRepository {
   // TODO: trocar o mock pela API.
   List<Question> getQuestions() {
     return [
-      // fase 1
       Question(
         mission: "Missäo Segurança",
         fase: "O Estranho no Parque",
@@ -13,18 +12,27 @@ class QuizRepository {
             "Ana está brincando no parque quando um estranho oferece doces e pede para ela ir conhecer seus gatinhos. O que Ana deve fazer?",
         explanation:
             "Muito bem! É importante nunca ir com estranhos e sempre procurar ajuda de adultos de confiança.",
-        incorrectExplanations: [
-          "Pense novamente! Nunca devemos ir com estranhos, mesmo que pareçam legais.",
-          "Conversar com o estranho para não ser mal educada.",
-        ],
         options: [
-          "Aceitar os doces e ir ver os gatinhos.",
-          "Agradecer, mars dizer não e procurar um adulto de confiança.",
-          "Conversar com o estranho para não ser mal educada.",
+          OptionWithExplanation(
+            option: "Aceitar os doces e ir ver os gatinhos.",
+            explanation:
+                "Nunca devemos aceitar convites de estranhos, mesmo que pareçam legais.",
+          ),
+          OptionWithExplanation(
+            option:
+                "Agradecer, mas dizer não e procurar um adulto de confiança.",
+            explanation:
+                "Muito bem! É importante nunca ir com estranhos e procurar ajuda de adultos de confiança.",
+          ),
+          OptionWithExplanation(
+            option: "Conversar com o estranho para não ser mal educada.",
+            explanation:
+                "Não devemos dar informações ou conversar com estranhos.",
+          ),
         ],
         correctAnswerIndex: 1,
       ),
-      //fase 2
+      // fase 2
       Question(
         mission: "Missao Segurança",
         fase: "O Segredo",
@@ -33,18 +41,27 @@ class QuizRepository {
             "João ganhou um presente de um familiar que pediu para manter segredo dos pais. O que João deve fazer?",
         explanation:
             "Excelente! Não devemos guardar segredos de adultos, mesmo que sejam familiares. Seus pais precisam saber.",
-        incorrectExplanations: [
-          "Lembre-se: Segredos que adultos pedem para esconder dos pais nunca são bons segredos",
-          "Lembre-se2: Segredos que adultos pedem para esconder dos pais nunca são bons segredos",
-        ],
         options: [
-          "Guardar o segredo para não magoar o familiar.",
-          "Contar para os pais imediatamente.",
-          "Só contar se o presente for algo ruim.",
+          OptionWithExplanation(
+            option: "Guardar o segredo para não magoar o familiar.",
+            explanation:
+                "Lembre-se: Segredos que adultos pedem para esconder dos pais nunca são bons segredos",
+          ),
+          OptionWithExplanation(
+            option: "Contar para os pais imediatamente.",
+            explanation:
+                "Excelente! Não devemos guardar segredos de adultos, mesmo que sejam familiares. Seus pais precisam saber.",
+          ),
+          OptionWithExplanation(
+            option: "Só contar se o presente for algo ruim.",
+            explanation:
+                "Lembre-se2: Segredos que adultos pedem para esconder dos pais nunca são bons segredos",
+          ),
         ],
         correctAnswerIndex: 1,
       ),
-      //fase3
+
+      // fase 3
       Question(
         mission: "Missao Segurança",
         fase: "O Cyberbullying",
@@ -53,18 +70,25 @@ class QuizRepository {
             "Maria recebeu mensagens maldosas no celular de colegas da escola. O que ela deve fazer?",
         explanation:
             "Perfeito! Bullying e cyberbullying são formas de violência e devemos sempre pedir ajuda.",
-        incorrectExplanations: [
-          "É importante não guardar isso para si mesmo nem revidar. Peça ajuda a um adulto de confiança!",
-          "2 É importante não guardar isso para si mesmo nem revidar. Peça ajuda a um adulto de confiança!"
-        ],
         options: [
-          "Ignorar as mensagens e não contar para ninguém.",
-          "Responder com mensagens maldosas também.",
-          "Mostrar as mensagens para os pais ou professores.",
+          OptionWithExplanation(
+            option: "Ignorar as mensagens e não contar para ninguém.",
+            explanation:
+                "É importante não guardar isso para si mesmo nem revidar. Peça ajuda a um adulto de confiança!",
+          ),
+          OptionWithExplanation(
+            option: "Responder com mensagens maldosas também.",
+            explanation:
+                "É importante não guardar isso para si mesmo nem revidar. Peça ajuda a um adulto de confiança!",
+          ),
+          OptionWithExplanation(
+            option: "Mostrar as mensagens para os pais ou professores.",
+            explanation:
+                "Perfeito! Bullying e cyberbullying são formas de violência e devemos sempre pedir ajuda.",
+          ),
         ],
         correctAnswerIndex: 2,
-      ),
-      // fase 4
+      ), // fase 4
       Question(
         mission: "Missao Segurança",
         fase: "Toque Inadequado",
@@ -73,14 +97,21 @@ class QuizRepository {
             "Alguém tocou Pedro de um jeito que o deixou desconfortável e pediu para ele não contar a ninguém. O que fazer?",
         explanation:
             "Exatamente! Seu corpo é seu e ninguém pode tocar você de forma inadequada. Sempre conte para alguém de confiança.",
-        incorrectExplanations: [
-          "Toques que nos deixam desconfortáveis nunca devem ser mantidos em segredo. Conte para alguém!",
-          "2Toques que nos deixam desconfortáveis nunca devem ser mantidos em segredo. Conte para alguém!",
-        ],
         options: [
-          "Contar imediatamente para um adulto de confiança.",
-          "Guardar segredo como foi pedido.",
-          "Esperar para ver se acontece de novo.",
+          OptionWithExplanation(
+            option: "Contar imediatamente para um adulto de confiança.",
+            explanation: " ",
+          ),
+          OptionWithExplanation(
+            option: "Guardar segredo como foi pedido.",
+            explanation:
+                "Toques que nos deixam desconfortáveis nunca devem ser mantidos em segredo. Conte para alguém!",
+          ),
+          OptionWithExplanation(
+            option: "Esperar para ver se acontece de novo.",
+            explanation:
+                "2Toques que nos deixam desconfortáveis nunca devem ser mantidos em segredo. Conte para alguém!",
+          ),
         ],
         correctAnswerIndex: 0,
       ),
@@ -93,21 +124,25 @@ class QuizRepository {
             "Sofia percebe que sua amiga sempre vem para a escola sem lanche e às vezes com a mesma roupa por vários dias. O que fazer?",
         explanation:
             "Muito bem! Negligência também é uma forma de violência e precisamos ajudar nossos amigos.",
-        incorrectExplanations: [
-          "Quando percebemos que um amigo pode estar sendo negligenciado, devemos avisar um adulto responsável.",
-          "Quando percebemos que um amigo pode estar sendo negligenciado, devemos avisar um adulto responsável.",
-        ],
         options: [
-          "Não fazer nada, pois não é da sua conta.",
-          "Compartilhar seu lanche mas não contar para ninguém.",
-          "Contar para um professor ou responsável da escola.",
+          OptionWithExplanation(
+            option: "Não fazer nada, pois não é da sua conta.",
+            explanation:
+                "Quando percebemos que um amigo pode estar sendo negligenciado, devemos avisar um adulto responsável.",
+          ),
+          OptionWithExplanation(
+            option: "Compartilhar seu lanche mas não contar para ninguém.",
+            explanation:
+                "Quando percebemos que um amigo pode estar sendo negligenciado, devemos avisar um adulto responsável.",
+          ),
+          OptionWithExplanation(
+            option: "Contar para um professor ou responsável da escola.",
+            explanation:
+                "Quando percebemos que um amigo pode estar sendo negligenciado, devemos avisar um adulto responsável.",
+          ),
         ],
-        correctAnswerIndex: 2,
+        correctAnswerIndex: 0,
       ),
     ];
   }
-  // // Método para obter as perguntas
-  // List<Question> fetchQuestions() {
-  //   return _questions;
-  // }
 }
