@@ -34,7 +34,7 @@ class QuizRepository {
       ),
       // fase 2
       Question(
-        mission: "Missao Segurança",
+        mission: "Missão Segurança",
         fase: "O Segredo",
         imagePath: 'assets/images/segredo.png',
         title:
@@ -63,7 +63,7 @@ class QuizRepository {
 
       // fase 3
       Question(
-        mission: "Missao Segurança",
+        mission: "Missão Segurança",
         fase: "O Cyberbullying",
         imagePath: 'assets/images/cyberbullying.png',
         title:
@@ -90,7 +90,7 @@ class QuizRepository {
         correctAnswerIndex: 2,
       ), // fase 4
       Question(
-        mission: "Missao Segurança",
+        mission: "Missão Segurança",
         fase: "Toque Inadequado",
         imagePath: 'assets/images/toque.png',
         title:
@@ -110,14 +110,14 @@ class QuizRepository {
           OptionWithExplanation(
             option: "Esperar para ver se acontece de novo.",
             explanation:
-                "2Toques que nos deixam desconfortáveis nunca devem ser mantidos em segredo. Conte para alguém!",
+                "2Toques que nos deixa desconfortáveis nunca devem ser mantidos em segredo. Conte para alguém!",
           ),
         ],
         correctAnswerIndex: 0,
       ),
       // fase 5
       Question(
-        mission: "Missao Segurança",
+        mission: "Missão Segurança",
         fase: "Negligência",
         imagePath: 'assets/images/negligencia.png',
         title:
@@ -138,10 +138,10 @@ class QuizRepository {
           OptionWithExplanation(
             option: "Contar para um professor ou responsável da escola.",
             explanation:
-                "Quando percebemos que um amigo pode estar sendo negligenciado, devemos avisar um adulto responsável.",
+                "Muito bem! Negligência também é uma forma de violência e precisamos ajudar nossos amigos.",
           ),
         ],
-        correctAnswerIndex: 0,
+        correctAnswerIndex: 2,
       ),
     ];
   }

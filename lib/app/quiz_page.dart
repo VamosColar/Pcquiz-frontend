@@ -1,10 +1,11 @@
 import 'package:educagame/app/home_page.dart';
 import 'package:educagame/controller/quiz_controller.dart';
 import 'package:educagame/repository/quiz_repository.dart';
+import 'package:educagame/widgets/custom_btn_speed_dial.dart';
+import 'package:educagame/widgets/custom_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class QuizPage extends StatelessWidget {
   @override
@@ -56,14 +57,10 @@ class QuizPage extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    StepProgressIndicator(
+                    const SizedBox(width: 2),
+                    CustomProgressBar(
                       totalSteps: quizController.questions.length,
                       currentStep: quizController.questionIndex.value + 1,
-                      size: 26,
-                      padding: 2,
-                      selectedColor: const Color(0xFFE5F90E),
-                      unselectedColor: Colors.grey,
-                      roundedEdges: const Radius.circular(2),
                     ),
                     const SizedBox(width: 5),
                     Text(
@@ -77,24 +74,8 @@ class QuizPage extends StatelessWidget {
                   ],
                 ),
               ),
-              // Título
-              Text(
-                'Missão Segurança',
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width > 600 ? 22 : 15,
-                  fontFamily: 'BalooThambi',
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xFF713302),
-                  shadows: const [
-                    Shadow(
-                      blurRadius: 4.0,
-                      color: Color(0xffFAE7CD),
-                      offset: Offset(2.0, 1.0),
-                    ),
-                  ],
-                ),
-              ),
-              // Container de pontuação
+
+              // // Container de pontuação
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
@@ -132,6 +113,12 @@ class QuizPage extends StatelessWidget {
             ],
           ),
         ),
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 6.0),
+          child: CustomBtnSpeedDial(
+            overlayColor: Color.fromARGB(100, 0, 0, 0),
+          ),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -157,6 +144,29 @@ class QuizPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Título
+                  Center(
+                    child: Text(
+                      'Missão Segurança',
+                      style: TextStyle(
+                        fontSize:
+                            MediaQuery.of(context).size.width > 600 ? 22 : 15,
+                        fontFamily: 'BalooThambi',
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF713302),
+                        shadows: const [
+                          Shadow(
+                            blurRadius: 4.0,
+                            color: Color(0xffFAE7CD),
+                            offset: Offset(2.0, 1.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

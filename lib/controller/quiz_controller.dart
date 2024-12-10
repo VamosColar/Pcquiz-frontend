@@ -2,9 +2,9 @@ import 'package:educagame/app/home_page.dart';
 import 'package:educagame/app/quiz_result_page.dart';
 import 'package:educagame/models/question_model.dart';
 import 'package:educagame/repository/quiz_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 
 class QuizController extends GetxController {
   final QuizRepository repository;
@@ -17,6 +17,7 @@ class QuizController extends GetxController {
   var explanation = "".obs;
   var isShowingFeedback = false.obs;
   var quizCompleted = false.obs;
+  var feedbackDelay = 3.obs; // Tempo de exibição do feedback
 
   @override
   void onInit() {
@@ -25,23 +26,17 @@ class QuizController extends GetxController {
   }
 
   void checkAnswer(BuildContext context, int selectedIndex) {
-    final currentQuestionIndex = questionIndex.value;
+    if (isShowingFeedback.value) return; // Evita múltiplas chamadas
 
-    if (isShowingFeedback.value) return;
-    isShowingFeedback.value = true;
+    isShowingFeedback.value = true; // Feedback iniciado
+    final currentQuestion = questions[questionIndex.value];
 
-    final question = questions[currentQuestionIndex];
-
-    if (selectedIndex == question.correctAnswerIndex) {
+    if (selectedIndex == currentQuestion.correctAnswerIndex) {
       score.value++;
-      explanation.value = question.explanation;
+      explanation.value = currentQuestion.explanation;
       showFeedbackDialog(context, true, "Correto!", explanation.value);
-      // redireciona para o próximo diálogo
-      Future.delayed(const Duration(seconds: 3), () {
-        showNextPhaseDialog(context);
-      });
     } else {
-      explanation.value = question.options[selectedIndex].explanation;
+      explanation.value = currentQuestion.options[selectedIndex].explanation;
       showFeedbackDialog(context, false, "Tente novamente!", explanation.value);
     }
   }
@@ -50,6 +45,7 @@ class QuizController extends GetxController {
       BuildContext context, bool isCorrect, String title, String message) {
     showDialog(
       context: context,
+      barrierDismissible: false, // Impede o fechamento fora do diálogo
       builder: (context) {
         return AlertDialog(
           backgroundColor:
@@ -97,15 +93,14 @@ class QuizController extends GetxController {
           ),
         );
       },
-    ).then((_) {
-      // Reseta `isShowingFeedback` quando o diálogo é fechado
-      isShowingFeedback.value = false;
+    );
 
+    Future.delayed(Duration(seconds: feedbackDelay.value), () {
+      Navigator.of(context).pop();
       if (isCorrect) {
-        // Aguarda um pouco antes de exibir o próximo diálogo (se necessário)
-        Future.delayed(const Duration(milliseconds: 300), () {
-          showNextPhaseDialog(context);
-        });
+        showNextPhaseDialog(context);
+      } else {
+        isShowingFeedback.value = false; // Reset para próxima interação
       }
     });
   }
@@ -113,6 +108,7 @@ class QuizController extends GetxController {
   void showNextPhaseDialog(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: false, // Bloqueia fechamento externo
       builder: (context) {
         return AlertDialog(
           backgroundColor: const Color(0xFFFFF5CC),
@@ -134,17 +130,15 @@ class QuizController extends GetxController {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Gera as estrelas com base no score
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 6.0,
                 children: List.generate(
-                  score.value, // Baseado no score atual
+                  score.value,
                   (index) => const Icon(
                     Icons.star,
                     color: Color(0xFFFFC700),
                     size: 56,
-                    // size: score.value > 5 ? 40 : 56, // perguntar se tera muitas fase, se tiver Reduz tamanho se muitas estrelas
                   ),
                 ),
               ),
@@ -161,6 +155,10 @@ class QuizController extends GetxController {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  moveToNextQuestion(context);
+                },
                 style: ElevatedButton.styleFrom(
                   elevation: 6,
                   backgroundColor: const Color(0xFFFEB205),
@@ -172,10 +170,6 @@ class QuizController extends GetxController {
                   side: const BorderSide(width: 4, color: Color(0xffFFF0C3)),
                   shadowColor: const Color(0xFF271B0F),
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  moveToNextQuestion(context);
-                },
                 child: const Text(
                   "Próxima Fase",
                   style: TextStyle(
@@ -189,6 +183,12 @@ class QuizController extends GetxController {
               ),
               const SizedBox(height: 8),
               ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   elevation: 6,
                   backgroundColor: const Color.fromARGB(255, 250, 224, 162),
@@ -200,12 +200,6 @@ class QuizController extends GetxController {
                   side: const BorderSide(width: 4, color: Color(0xffFFF0C3)),
                   shadowColor: const Color(0xFF271B0F),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
-                },
                 child: const Text(
                   "Sair do Jogo",
                   style: TextStyle(
@@ -227,7 +221,7 @@ class QuizController extends GetxController {
   void moveToNextQuestion(BuildContext context) {
     if (questionIndex.value < questions.length - 1) {
       questionIndex.value++;
-      isShowingFeedback.value = false; // Reset feedback da proxima questao
+      isShowingFeedback.value = false; // Reseta feedback
     } else {
       quizCompleted.value = true; // Marca o quiz como concluído
       Navigator.pushAndRemoveUntil(

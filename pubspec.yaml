@@ -1,7 +1,6 @@
 name: educagame
 description: "Educaçao emocional com Gameficaçao"
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -19,6 +18,7 @@ dependencies:
   simple_speed_dial: ^0.1.7
   flutter_speed_dial: ^7.0.0
   flutter_svg: ^1.0.0
+  http: ^0.15.0
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +29,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
     - assets/icons/
