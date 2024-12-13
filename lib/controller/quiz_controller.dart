@@ -1,34 +1,74 @@
 import 'package:educagame/app/home_page.dart';
 import 'package:educagame/app/quiz_result_page.dart';
+import 'package:educagame/models/category_model.dart';
 import 'package:educagame/models/question_model.dart';
 import 'package:educagame/repository/quiz_repository.dart';
+import 'package:educagame/services/quiz_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class QuizController extends GetxController {
   final QuizRepository repository;
+  final QuizService quizService;
 
-  QuizController({required this.repository});
+  QuizController({
+    required this.repository,
+    required this.quizService,
+  });
 
-  var questions = <Question>[].obs;
-  var questionIndex = 0.obs;
-  var score = 0.obs;
-  var explanation = "".obs;
-  var isShowingFeedback = false.obs;
-  var quizCompleted = false.obs;
+  var categories = <Category>[].obs; // Lista de categorias
+  var questions = <Question>[].obs; // Perguntas da categoria selecionada
+  var questionIndex = 0.obs; // Índice da pergunta atual
+  var score = 0.obs; // Pontuação do usuário
+  var explanation = "".obs; // Explicação da resposta atual
+  var isShowingFeedback = false.obs; // Estado do feedback
+  var quizCompleted = false.obs; // Estado de conclusão do quiz
+  var isLoading = false.obs; // Estado de carregamento
   var feedbackDelay = 3.obs; // Tempo de exibição do feedback
+  var categoryName = "".obs; // Nome da categoria atual
 
   @override
   void onInit() {
     super.onInit();
-    questions.value = repository.getQuestions();
+    fetchCategories(); // Carrega categorias ao inicializar
   }
 
+  /// Carrega categorias da API via repository
+  Future<void> fetchCategories() async {
+    isLoading.value = true;
+    try {
+      categories.value = await repository.fetchCategories();
+    } catch (e) {
+      print('Erro ao carregar categorias: $e');
+      Get.snackbar('Erro',
+          'Falha ao carregar categorias. Verifique sua conexão ou tente novamente.');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /// Carrega perguntas de uma categoria específica
+  Future<void> fetchQuestions(int categoryId) async {
+    isLoading.value = true;
+    try {
+      questions.value = await repository.fetchQuestionsByCategory(categoryId);
+      questionIndex.value = 0; // Reseta o índice da pergunta
+      score.value = 0; // Reseta a pontuação
+    } catch (e) {
+      print('Erro ao carregar perguntas: $e');
+      Get.snackbar('Erro',
+          'Falha ao carregar perguntas. Verifique sua conexão ou tente novamente.');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /// Verifica a resposta selecionada pelo usuário
   void checkAnswer(BuildContext context, int selectedIndex) {
     if (isShowingFeedback.value) return; // Evita múltiplas chamadas
-
     isShowingFeedback.value = true; // Feedback iniciado
+
     final currentQuestion = questions[questionIndex.value];
 
     if (selectedIndex == currentQuestion.correctAnswerIndex) {
@@ -41,6 +81,7 @@ class QuizController extends GetxController {
     }
   }
 
+  /// Exibe o diálogo de feedback
   void showFeedbackDialog(
       BuildContext context, bool isCorrect, String title, String message) {
     showDialog(
@@ -100,11 +141,12 @@ class QuizController extends GetxController {
       if (isCorrect) {
         showNextPhaseDialog(context);
       } else {
-        isShowingFeedback.value = false; // Reset para próxima interação
+        isShowingFeedback.value = false;
       }
     });
   }
 
+  /// Exibe o diálogo de conclusão da fase
   void showNextPhaseDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -157,10 +199,9 @@ class QuizController extends GetxController {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  moveToNextQuestion(context);
+                  moveToNextQuestion();
                 },
                 style: ElevatedButton.styleFrom(
-                  elevation: 6,
                   backgroundColor: const Color(0xFFFEB205),
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -218,19 +259,14 @@ class QuizController extends GetxController {
     );
   }
 
-  void moveToNextQuestion(BuildContext context) {
+  /// Navega para a próxima pergunta ou finaliza o quiz
+  void moveToNextQuestion() {
     if (questionIndex.value < questions.length - 1) {
       questionIndex.value++;
       isShowingFeedback.value = false; // Reseta feedback
     } else {
       quizCompleted.value = true; // Marca o quiz como concluído
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => QuizResultPage(score: score.value),
-        ),
-        (route) => false, // Remove todas as telas anteriores da pilha
-      );
+      Get.offAll(() => QuizResultPage(score: score.value));
     }
   }
 }

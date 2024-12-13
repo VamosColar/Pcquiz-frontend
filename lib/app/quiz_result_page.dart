@@ -50,91 +50,35 @@ class QuizResultPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     SvgPicture.asset(
                       'assets/images/parabens.svg',
+                      alignment: Alignment.center,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(height: 20),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 40,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2.0,
-                                    color: Colors.white,
-                                    offset: Offset(1, 2),
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 40,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2.0,
-                                    color: Colors.white,
-                                    offset: Offset(1, 2),
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 40,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2.0,
-                                    color: Colors.white,
-                                    offset: Offset(1, 2),
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 40,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2.0,
-                                    color: Colors.white,
-                                    offset: Offset(1, 2),
-                                  ),
-                                ],
-                              ),
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 40,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 2.0,
-                                    color: Colors.white,
-                                    offset: Offset(1, 2),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 4),
-                              Flexible(
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/smile.svg',
-                                      width: 140,
-                                    ),
-                                  ],
+                          for (int i = 0; i < score; i++)
+                            const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 40,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 2.0,
+                                  color: Colors.white,
+                                  offset: Offset(1, 2),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
+                            'assets/images/smile.svg',
+                            width: 140,
                           ),
                         ],
                       ),
                     ),
+                    const SizedBox(height: 20),
                     Container(
                       padding: const EdgeInsets.all(18.0),
                       decoration: BoxDecoration(
