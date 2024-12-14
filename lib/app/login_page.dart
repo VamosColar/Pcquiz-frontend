@@ -15,11 +15,7 @@ class LoginPage extends StatelessWidget {
       () {
         // Verifica se o usuário já está autenticado
         if (authController.isLoggedIn.value) {
-          // Redireciona para a HomePage
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Get.offAll(() => HomePage());
-          });
-          return const Center(child: CircularProgressIndicator());
+          return const HomePage();
         }
 
         return Scaffold(
@@ -94,7 +90,7 @@ class LoginPage extends StatelessWidget {
                       ? Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Text(
-                            authController.errorMessage as String,
+                            authController.errorMessage.value,
                             style: const TextStyle(
                               color: Colors.red,
                               fontSize: 14,
