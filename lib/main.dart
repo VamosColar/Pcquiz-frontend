@@ -1,4 +1,5 @@
 import 'package:educagame/app/login_page.dart';
+import 'package:educagame/controller/auth_controller.dart';
 import 'package:educagame/controller/quiz_controller.dart';
 import 'package:educagame/repository/quiz_repository.dart';
 import 'package:educagame/services/quiz_service.dart';
@@ -17,6 +18,7 @@ void main() async {
     throw Exception(
         "BASE_URL ou API_TOKEN não foram encontrados no arquivo .env");
   }
+  Get.put(AuthController());
   Get.put(
     QuizController(
       repository: QuizRepository(
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'EducaApp',
+      title: 'Pc Quiz',
       home: LoginPage(),
     );
   }

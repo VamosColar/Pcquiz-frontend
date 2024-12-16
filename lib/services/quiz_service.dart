@@ -14,6 +14,7 @@ class QuizService {
         'x-api-token': token,
         'Content-Type': 'application/json',
       };
+  // Buscar categorias
   Future<List<Category>> fetchCategories() async {
     final url = '$baseUrl/categories';
     print("Resposta da url: $url");
@@ -31,13 +32,11 @@ class QuizService {
             .toList();
       } else {
         print("Headers enviados: $headers");
-
-        print("Erro HTTP: ${response.statusCode} - ${response.body}");
+        print("Erro HTTP: \${response.statusCode} - \${response.body}");
         throw Exception('Erro ao carregar categorias');
       }
     } catch (e) {
       print("Headers enviados2: $headers");
-
       print("Erro ao carregar categorias2: $e");
       rethrow;
     }
@@ -57,7 +56,7 @@ class QuizService {
         final List<dynamic> questionsJson = data['message'];
         return questionsJson.map((q) => Question.fromJson(q)).toList();
       } else {
-        print('Erro HTTP: ${response.statusCode} - ${response.body}');
+        print('Erro HTTP: \${response.statusCode} - \${response.body}');
         throw Exception('Erro ao carregar perguntas da categoria');
       }
     } catch (e) {
@@ -67,17 +66,37 @@ class QuizService {
   }
 
   // Enviar resposta
-  Future<void> submitAnswer(bool isCorrect) async {
+  Future<void> submitAnswer(
+    bool isCorrect, {
+    required int questionId,
+    required int optionId,
+    required String identify,
+  }) async {
     final url = Uri.parse('$baseUrl/answers');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'isCorrect': isCorrect}),
-    );
-
-    if (response.statusCode != 200) {
-      print('Erro ao enviar resposta');
-      throw Exception('Erro ao enviar resposta');
+    print('Resposta da API: submitAnswer $url');
+    final body = json.encode({
+      'questionId': questionId,
+      'optionId': optionId,
+      'identify': identify, // Inclui o identify no envio
+    });
+    print('Resposta da API: body $body');
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+      print('Resposta da API: response body $response');
+      print('Resposta da API: response body 2 ${response.body}');
+      if (response.statusCode == 200) {
+        print('Resposta do quiz enviada com sucesso');
+      } else {
+        print('Erro HTTP: ${response.statusCode} - ${response.body}');
+        throw Exception('Erro ao enviar resposta do quiz');
+      }
+    } catch (e) {
+      print('Erro ao enviar resposta: $e');
+      rethrow;
     }
   }
 }

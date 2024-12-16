@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
   final AuthController authController = Get.put(AuthController());
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController identifyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,88 +19,108 @@ class LoginPage extends StatelessWidget {
         }
 
         return Scaffold(
+          backgroundColor: const Color(0xFFFFF8E1), // Fundo claro
           appBar: AppBar(
-            title: const Text('Login'),
+            title: const Text(
+              'Bem-Vindo ao PcQuiz',
+              style: TextStyle(
+                  fontFamily: 'BalooThambi',
+                  fontWeight: FontWeight.w200,
+                  fontSize: 20),
+            ),
             backgroundColor: const Color(0xFFFFB405),
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
+                Center(
+                  child: Image.asset(
+                    'assets/images/apresentacao_agente.png',
+                    height: 150,
                   ),
                 ),
                 const SizedBox(height: 20),
+                const Text(
+                  'Para começar informe seu e-mail ou continue anonimamente!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'BalooThambi',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w200,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 30),
+
+                TextField(
+                  controller: identifyController,
+                  decoration: InputDecoration(
+                    labelText: 'Digite seu email',
+                    hintText: 'Digite seu email ou deixe em branco',
+                    labelStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontFamily: 'BalooThambi',
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    prefixIcon: const Icon(Icons.email, color: Colors.orange),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 20),
+
                 ElevatedButton(
                   onPressed: () {
-                    authController.login(emailController.text);
+                    authController.setIdentify(identifyController.text);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF793C0B),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
+                    backgroundColor: const Color(0xFF4CAF50),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
-                    'Login com Email',
+                    'Entrar com Email',
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
                       color: Colors.white,
+                      fontFamily: 'BalooThambi',
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
+                //Entrar sem Email
                 ElevatedButton(
                   onPressed: () {
                     authController.loginAnonymously();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFB405),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
+                    backgroundColor: const Color(0xFFFFB300),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
-                    'Entrar sem email',
+                    'Entrar sem Email',
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                      color: Colors.black87,
+                      fontFamily: 'BalooThambi',
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                Obx(
-                  () => authController.isLoading.value
-                      ? const CircularProgressIndicator()
-                      : const SizedBox.shrink(),
-                ),
-                Obx(
-                  () => authController.errorMessage.isNotEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            authController.errorMessage.value,
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                ),
               ],
             ),
           ),

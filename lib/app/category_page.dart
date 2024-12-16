@@ -29,8 +29,8 @@ class CategoryPage extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xFFFFB405),
-                Color(0xffE8930A),
+                Color(0xFFFED295),
+                Color(0xffFED295),
               ],
             ),
           ),

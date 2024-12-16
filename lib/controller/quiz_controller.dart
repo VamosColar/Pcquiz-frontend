@@ -1,6 +1,8 @@
 import 'package:educagame/app/home_page.dart';
 import 'package:educagame/app/quiz_result_page.dart';
+import 'package:educagame/controller/auth_controller.dart';
 import 'package:educagame/models/category_model.dart';
+import 'package:educagame/models/option_model.dart';
 import 'package:educagame/models/question_model.dart';
 import 'package:educagame/repository/quiz_repository.dart';
 import 'package:educagame/services/quiz_service.dart';
@@ -27,6 +29,7 @@ class QuizController extends GetxController {
   var isLoading = false.obs; // Estado de carregamento
   var feedbackDelay = 3.obs; // Tempo de exibição do feedback
   var categoryName = "".obs; // Nome da categoria atual
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   void onInit() {
@@ -65,88 +68,91 @@ class QuizController extends GetxController {
   }
 
   /// Verifica a resposta selecionada pelo usuário
-  void checkAnswer(BuildContext context, int selectedIndex) {
-    if (isShowingFeedback.value) return; // Evita múltiplas chamadas
-    isShowingFeedback.value = true; // Feedback iniciado
+  void checkAnswer(BuildContext context, int selectedIndex) async {
+    if (isShowingFeedback.value || isLoading.value)
+      return; // Evita múltiplas chamadas
+    isShowingFeedback.value = true;
+    isLoading.value = true; // Ativa o carregamento
 
-    final currentQuestion = questions[questionIndex.value];
+    try {
+      if (questionIndex.value < 0 || questionIndex.value >= questions.length) {
+        print("Índice de pergunta inválido.");
+        return;
+      }
 
-    if (selectedIndex == currentQuestion.correctAnswerIndex) {
-      score.value++;
-      explanation.value = currentQuestion.explanation;
-      showFeedbackDialog(context, true, "Correto!", explanation.value);
-    } else {
-      explanation.value = currentQuestion.options[selectedIndex].explanation;
-      showFeedbackDialog(context, false, "Tente novamente!", explanation.value);
+      final currentQuestion = questions[questionIndex.value];
+
+      // Marca a opção selecionada
+      for (var option in currentQuestion.options) {
+        option.isCorrect = false;
+      }
+      currentQuestion.options[selectedIndex].isCorrect = true;
+
+      final isCorrect = selectedIndex == currentQuestion.correctAnswerIndex;
+
+      if (isCorrect) {
+        score.value++;
+      }
+
+      await sendQuizResponse(
+          currentQuestion, currentQuestion.options[selectedIndex], isCorrect);
+
+      showFeedbackDialog(
+        context,
+        isCorrect,
+        isCorrect ? "Correto!" : "Tente novamente!",
+        isCorrect
+            ? currentQuestion.explanation
+            : currentQuestion.options[selectedIndex].explanation,
+      );
+    } finally {
+      isLoading.value = false; // Desativa o carregamento
     }
   }
 
-  /// Exibe o diálogo de feedback
-  void showFeedbackDialog(
-      BuildContext context, bool isCorrect, String title, String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Impede o fechamento fora do diálogo
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor:
-              isCorrect ? const Color(0xFF4A7B0F) : const Color(0xFF7B0F0F),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(
-              color:
-                  isCorrect ? const Color(0xFF84E760) : const Color(0xFFFF2103),
-              width: 4,
-            ),
-          ),
-          title: Row(
-            children: [
-              const SizedBox(width: 30),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          content: Row(
-            children: [
-              SvgPicture.asset(
-                isCorrect
-                    ? 'assets/images/correto.svg'
-                    : 'assets/images/atencao2.svg',
-                width: 45,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-
-    Future.delayed(Duration(seconds: feedbackDelay.value), () {
-      Navigator.of(context).pop();
-      if (isCorrect) {
-        showNextPhaseDialog(context);
-      } else {
-        isShowingFeedback.value = false;
-      }
-    });
+  /// Envia uma resposta para o endpoint
+  Future<void> sendQuizResponse(
+      Question question, Option selectedOption, bool isCorrect) async {
+    try {
+      await repository.submitAnswer(
+        isCorrect: isCorrect,
+        questionId: question.id,
+        optionId: selectedOption.id,
+        identify: authController.identify.value.isNotEmpty
+            ? authController.identify.value
+            : 'anonimo',
+      );
+      print('Resposta enviada com sucesso!');
+    } catch (e) {
+      print('Erro ao enviar resposta: $e');
+      Get.snackbar(
+        'Erro',
+        'Falha ao enviar a resposta. Verifique sua conexão.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
-  /// Exibe o diálogo de conclusão da fase
+  /// Navega para a próxima pergunta ou finaliza o quiz
+  void moveToNextQuestion() async {
+    if (questionIndex.value < questions.length - 1) {
+      questionIndex.value++;
+      isShowingFeedback.value = false; // Reseta feedback
+    } else {
+      quizCompleted.value = true; // Marca o quiz como concluído
+
+      await sendAllAnswers(); // Envia todas as respostas ao final do quiz
+//verificar se seria assim mesmo
+      Get.snackbar(
+        'Quiz Finalizado',
+        'Você marcou ${score.value} ponto(s)!',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+      Get.offAll(() => QuizResultPage(score: score.value));
+    }
+  }
+
   void showNextPhaseDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -259,14 +265,86 @@ class QuizController extends GetxController {
     );
   }
 
-  /// Navega para a próxima pergunta ou finaliza o quiz
-  void moveToNextQuestion() {
-    if (questionIndex.value < questions.length - 1) {
-      questionIndex.value++;
-      isShowingFeedback.value = false; // Reseta feedback
-    } else {
-      quizCompleted.value = true; // Marca o quiz como concluído
-      Get.offAll(() => QuizResultPage(score: score.value));
+  /// Envia todas as respostas ao concluir o quiz
+  Future<void> sendAllAnswers() async {
+    for (var question in questions) {
+      final selectedOption = question.options.firstWhere(
+        (option) => option.isCorrect,
+        orElse: () => Option.empty(),
+      );
+
+      if (selectedOption.id != -1) {
+        final isCorrect = selectedOption.id == question.correctAnswerIndex;
+        await sendQuizResponse(question, selectedOption, isCorrect);
+      } else {
+        print('Nenhuma opção selecionada para a questão ${question.id}');
+      }
     }
+  }
+
+  /// Exibe o diálogo de feedback
+  void showFeedbackDialog(
+      BuildContext context, bool isCorrect, String title, String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor:
+              isCorrect ? const Color(0xFF4A7B0F) : const Color(0xFF7B0F0F),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+            side: BorderSide(
+              color:
+                  isCorrect ? const Color(0xFF84E760) : const Color(0xFFFF2103),
+              width: 4,
+            ),
+          ),
+          title: Row(
+            children: [
+              const SizedBox(width: 30),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: Row(
+            children: [
+              SvgPicture.asset(
+                isCorrect
+                    ? 'assets/images/correto.svg'
+                    : 'assets/images/atencao2.svg',
+                width: 45,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.of(context).pop();
+      if (isCorrect) {
+        showNextPhaseDialog(context);
+        // moveToNextQuestion();
+      } else {
+        isShowingFeedback.value = false;
+      }
+    });
   }
 }

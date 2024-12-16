@@ -97,7 +97,7 @@ class QuizResultPage extends StatelessWidget {
                               text:
                                   'Se você suspeita de violência contra crianças ou adolescentes, ligue para:\n',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 18,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFF332C24),
@@ -105,14 +105,36 @@ class QuizResultPage extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: 'Disque 100',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
                                 ),
-                                TextSpan(text: ' - Disque Direitos Humanos\n'),
+                                TextSpan(
+                                  text: ' - Disque Direitos Humanos\n',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
+                                ),
                                 TextSpan(
                                   text: 'Disque 190',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
                                 ),
-                                TextSpan(text: ' - Polícia Militar'),
+                                TextSpan(
+                                  text: ' - Polícia Militar',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -131,7 +153,11 @@ class QuizResultPage extends StatelessWidget {
                                   text: '• Sempre confie em seus instintos\n'
                                       '• Não tenha medo de pedir ajuda\n'
                                       '• Sua segurança é a prioridade número um!',
-                                  style: TextStyle(fontWeight: FontWeight.w400),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ],
                             ),
@@ -141,10 +167,9 @@ class QuizResultPage extends StatelessWidget {
                             'Juntos, podemos criar um mundo mais seguro para todos!',
                             textAlign: TextAlign.start,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
                               fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF332C24),
+                              fontSize: 13,
                             ),
                           ),
                         ],

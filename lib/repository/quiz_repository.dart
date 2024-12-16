@@ -18,8 +18,18 @@ class QuizRepository {
   }
 
   // Envia a resposta da questão
-  Future<void> submitAnswer(bool isCorrect) async {
-    return await quizService.submitAnswer(isCorrect);
+  Future<void> submitAnswer({
+    required bool isCorrect,
+    required int questionId,
+    required int optionId,
+    required String identify,
+  }) async {
+    return await quizService.submitAnswer(
+      isCorrect,
+      questionId: questionId,
+      optionId: optionId,
+      identify: identify,
+    );
   }
 }
 

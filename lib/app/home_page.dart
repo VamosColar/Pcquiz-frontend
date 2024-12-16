@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> {
             foregroundColor: const Color(0xff793C0B),
             onTap: () {
               authController.logout();
-              print('Sair');
             },
           ),
         ],
