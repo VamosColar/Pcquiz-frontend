@@ -32,8 +32,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
-    - assets/icons/
+    # - assets/
+    # - assets/icons/
     - assets/images/
     - assets/images/personagem.svg
     - assets/images/man.png
@@ -46,9 +46,9 @@ flutter:
     - family: BalooThambi
       fonts:
         - asset: assets/fonts/BalooThambi-Regular.ttf
-        - asset: assets/fonts/BalooBhaijaan.ttf
-        - asset: assets/fonts/AbhayaLibre-ExtraBold.ttf
-        - asset: assets/fonts/Inter-Regular.otf
+        # - asset: assets/fonts/BalooBhaijaan.ttf
+        # - asset: assets/fonts/AbhayaLibre-ExtraBold.ttf
+        # - asset: assets/fonts/Inter-Regular.otf
     - family: BalooBhaijaan
       fonts:
         - asset: assets/fonts/BalooBhaijaan.ttf
