@@ -7,7 +7,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class QuizPage extends StatelessWidget {
-  const QuizPage({super.key});
+  QuizPage({super.key});
+
+  final List<Color> backgroundColors = [
+    const Color(0xFF6EAF99),
+    const Color(0xFF7FAF6E),
+    const Color(0xFFD77D7D),
+    const Color(0xFFFFF1B7),
+    const Color(0xFFACE8E0),
+  ];
+  //Obtenho o indice da fase
+  int getColorIndex(int currentIndex) {
+    return currentIndex % backgroundColors.length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +38,7 @@ class QuizPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFFFFB405),
-                Color(0xffE8930A),
-              ],
-            ),
-          ),
+          color: Colors.transparent,
         ),
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -144,15 +147,13 @@ class QuizPage extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.white60,
                         padding: const EdgeInsets.symmetric(
                           vertical: 16,
                           horizontal: 20,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(
-                              width: 4, color: Color(0xFF793C0B)),
                         ),
                       ),
                       onPressed: () {},
@@ -187,10 +188,10 @@ class QuizPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF3F2C1A),
+                      color: const Color(0xFFF2A557),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: const Color(0xFF844400),
+                        color: const Color(0xFF9A8670),
                         width: 8.0,
                       ),
                     ),
@@ -203,7 +204,7 @@ class QuizPage extends StatelessWidget {
                             fontFamily: 'AbhayaLibre-ExtraBold',
                             fontSize: 126,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff592E04),
+                            color: Color(0xffDE3400),
                           ),
                         ),
                         Flexible(
@@ -213,7 +214,7 @@ class QuizPage extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Color(0xFF271B0F),
                             ),
                           ),
                         ),

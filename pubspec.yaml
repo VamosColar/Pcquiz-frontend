@@ -35,13 +35,12 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
-    - assets/images/persona.png
+    - assets/images/personagem.svg
     - assets/images/man.png
     - assets/images/cyberbullying.png
     - assets/images/negligencia.png
     - assets/images/toque.png
     - assets/images/segredo.png
-    - assets/images/persona.svg
     - .env
   fonts:
     - family: BalooThambi

@@ -3,6 +3,7 @@ import 'package:educagame/models/option_model.dart';
 class Question {
   final int id;
   final String title;
+  final String description;
   final int fase;
   final String mission;
   final String explanation;
@@ -13,6 +14,7 @@ class Question {
   Question({
     required this.id,
     required this.title,
+    required this.description,
     required this.fase,
     required this.mission,
     required this.explanation,
@@ -25,6 +27,7 @@ class Question {
     return Question(
       id: json['id'],
       title: json['title'],
+      description: json['description'],
       fase: json['fase'],
       mission: json['mission'] ?? '', // Campo opcional
       explanation: json['explanation'] ?? '', // Campo opcional

@@ -9,7 +9,8 @@ class CategoryPage extends StatelessWidget {
   final String categoryName;
   final int categoryId;
 
-  CategoryPage({required this.categoryName, required this.categoryId});
+  CategoryPage(
+      {super.key, required this.categoryName, required this.categoryId});
 
   final QuizController quizController = Get.find<QuizController>();
 
@@ -45,10 +46,8 @@ class CategoryPage extends StatelessWidget {
                     horizontal: 20,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.white60,
                     borderRadius: BorderRadius.circular(12),
-                    border:
-                        Border.all(color: const Color(0xFF793C0B), width: 4),
                   ),
                   child: Text(
                     categoryName,
@@ -68,7 +67,7 @@ class CategoryPage extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     SvgPicture.asset(
-                      'assets/images/persona.svg',
+                      'assets/images/personagem.svg',
                       width: 350,
                     ),
                   ],
@@ -79,7 +78,7 @@ class CategoryPage extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 8,
-                    backgroundColor: const Color(0xFFFEB205),
+                    backgroundColor: const Color(0xFFFFCD5C),
                     padding: const EdgeInsets.symmetric(
                       vertical: 15,
                       horizontal: 50,
@@ -102,9 +101,9 @@ class CategoryPage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'BalooThambi',
                       fontSize: 40,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w100,
                       decorationThickness: 2.0,
-                      color: Color(0xFF271B0F),
+                      color: Color(0xFFD06D0B),
                     ),
                   ),
                 ),

@@ -30,25 +30,25 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: SpeedDial(
         overlayColor: const Color.fromARGB(255, 61, 45, 9),
         direction: SpeedDialDirection.down,
-        backgroundColor: const Color(0xFFFFB405),
-        foregroundColor: const Color.fromARGB(255, 152, 55, 55),
+        backgroundColor: const Color(0xFFEAC674),
+        foregroundColor: const Color(0xffDE3400),
         children: [
           SpeedDialChild(
             child: const Icon(Icons.share),
-            backgroundColor: const Color(0xFFFFB405),
-            foregroundColor: const Color(0xff793C0B),
+            backgroundColor: const Color(0xFFEAC674),
+            foregroundColor: const Color(0xffDE3400),
             onTap: () => print('Compartilhar'),
           ),
           SpeedDialChild(
             child: const Icon(Icons.help_outline, size: 30),
-            backgroundColor: const Color(0xFFFFB405),
-            foregroundColor: const Color(0xff793C0B),
+            backgroundColor: const Color(0xFFEAC674),
+            foregroundColor: const Color(0xffDE3400),
             onTap: () => print('Ajuda'),
           ),
           SpeedDialChild(
             child: const Icon(Icons.logout),
-            backgroundColor: const Color(0xFFFFB405),
-            foregroundColor: const Color(0xff793C0B),
+            backgroundColor: const Color(0xFFEAC674),
+            foregroundColor: const Color(0xffDE3400),
             onTap: () {
               authController.logout();
             },
@@ -68,16 +68,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFFFB405),
-              Color(0xffE8930A),
-            ],
-          ),
-        ),
+        color: const Color(0xffFECF6A),
         child: Center(
           child: Obx(() {
             if (quizController.isLoading.value) {
@@ -86,7 +77,7 @@ class _HomePageState extends State<HomePage> {
 
             if (quizController.categories.isEmpty) {
               return const Text(
-                "Nenhuma categoria disponível",
+                "Nenhuma missão disponível",
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,
@@ -115,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         side: const BorderSide(
                           width: 4,
-                          color: Color(0xff793C0B),
+                          color: Color(0xffF2A261),
                         ),
                         shadowColor: const Color(0xFF271B0F),
                       ),

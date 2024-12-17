@@ -1,3 +1,4 @@
+import 'package:educagame/app/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -10,7 +11,7 @@ class CustomBtnSpeedDial extends StatelessWidget {
   const CustomBtnSpeedDial({
     Key? key,
     this.overlayColor = const Color.fromARGB(255, 61, 45, 9),
-    this.backgroundColor = const Color(0xFFFFB405),
+    this.backgroundColor = const Color(0xFFEAC674),
     this.foregroundColor = const Color(0xff793C0B),
     this.mainIcon = const Icon(
       Icons.settings,
@@ -56,7 +57,10 @@ class CustomBtnSpeedDial extends StatelessWidget {
           child: const Icon(Icons.output_rounded),
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
-          onTap: () => print('Sair'),
+          onTap: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          ),
         ),
       ],
       child: mainIcon,

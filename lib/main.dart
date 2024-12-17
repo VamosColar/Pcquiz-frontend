@@ -1,4 +1,7 @@
+import 'package:educagame/app/home_page.dart';
 import 'package:educagame/app/login_page.dart';
+import 'package:educagame/app/quiz_page.dart';
+import 'package:educagame/app/quiz_result_page.dart';
 import 'package:educagame/controller/auth_controller.dart';
 import 'package:educagame/controller/quiz_controller.dart';
 import 'package:educagame/repository/quiz_repository.dart';
@@ -41,10 +44,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var score = 0.obs;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pc Quiz',
       home: LoginPage(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => LoginPage()),
+        GetPage(name: '/home', page: () => const HomePage()),
+        GetPage(name: '/quiz', page: () => QuizPage()),
+        GetPage(
+            name: '/result', page: () => QuizResultPage(score: score.value)),
+      ],
     );
   }
 }
