@@ -58,9 +58,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundColor: Colors.orange,
-                child: const Icon(Icons.settings, color: Colors.white),
+                child: Icon(Icons.settings, color: Colors.white),
               ),
               const SizedBox(width: 8),
               CustomProgressBar(
@@ -83,9 +83,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundColor: Colors.pink,
-                child: const Icon(Icons.star, color: Colors.white),
+                child: Icon(Icons.star, color: Colors.white),
               ),
               const SizedBox(width: 4),
               Text(
@@ -105,17 +105,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(60); // Altura da AppBar
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      appBar: CustomAppBar(
-        currentStep: 3,
-        totalSteps: 5,
-        stars: 2,
-      ),
-      body: Center(child: Text('Exemplo de barra de progresso customizada')),
-    ),
-  ));
 }

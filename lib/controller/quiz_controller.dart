@@ -22,6 +22,7 @@ class QuizController extends GetxController {
   var categories = <Category>[].obs; // Lista de categorias
   var questions = <Question>[].obs; // Perguntas da categoria selecionada
   var questionIndex = 0.obs; // Índice da pergunta atual
+  var currentPhase = 0.obs; //armazena fase
   var score = 0.obs; // Pontuação do usuário
   var explanation = "".obs; // Explicação da resposta atual
   var isShowingFeedback = false.obs; // Estado do feedback
@@ -31,10 +32,33 @@ class QuizController extends GetxController {
   var categoryName = "".obs; // Nome da categoria atual
   final AuthController authController = Get.find<AuthController>();
 
+  final List<Color> backgroundColors = [
+    const Color(0xFF6EAF99),
+    const Color(0xFF7FAF6E),
+    const Color(0xFFD77D7D),
+    const Color(0xFFFFF1B7),
+    const Color(0xFFACE8E0),
+  ];
+  Color get backgroundColor =>
+      backgroundColors[currentPhase.value % backgroundColors.length];
   @override
   void onInit() {
     super.onInit();
-    fetchCategories(); // Carrega categorias ao inicializar
+    fetchCategories().then((_) {
+      if (categories.isNotEmpty) {
+        fetchQuestions(categories.first.id);
+      }
+    });
+  }
+
+  @override
+  void onReady() {
+    ever(questionIndex, (callback) {
+      if (questions.isNotEmpty) {
+        currentPhase.value = questions[questionIndex.value].fase;
+      }
+    });
+    super.onReady();
   }
 
   /// Carrega categorias da API via repository
@@ -138,6 +162,8 @@ class QuizController extends GetxController {
     if (questionIndex.value < questions.length - 1) {
       questionIndex.value++;
       isShowingFeedback.value = false; // Reseta feedback
+      currentPhase.value++;
+      currentPhase.value = questions[questionIndex.value].fase;
     } else {
       quizCompleted.value = true; // Marca o quiz como concluído
 
@@ -208,7 +234,7 @@ class QuizController extends GetxController {
                   moveToNextQuestion();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFEB205),
+                  backgroundColor: const Color(0xFFFFCD5C),
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   shape: RoundedRectangleBorder(
@@ -224,7 +250,7 @@ class QuizController extends GetxController {
                     fontSize: 24,
                     fontWeight: FontWeight.w400,
                     decorationThickness: 2.0,
-                    color: Color(0xFF271B0F),
+                    color: Color(0xFFD06D0B),
                   ),
                 ),
               ),
@@ -254,7 +280,7 @@ class QuizController extends GetxController {
                     fontSize: 24,
                     fontWeight: FontWeight.w400,
                     decorationThickness: 2.0,
-                    color: Color(0xFF271B0F),
+                    color: Color(0xFF71461A),
                   ),
                 ),
               ),
@@ -291,24 +317,26 @@ class QuizController extends GetxController {
       builder: (context) {
         return AlertDialog(
           backgroundColor:
-              isCorrect ? const Color(0xFF4A7B0F) : const Color(0xFF7B0F0F),
+              isCorrect ? const Color(0xFF92C158) : const Color(0xffDC2A2A),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: BorderSide(
               color:
-                  isCorrect ? const Color(0xFF84E760) : const Color(0xFFFF2103),
+                  isCorrect ? const Color(0xFF84E760) : const Color(0xFFDC2A2A),
               width: 4,
             ),
           ),
           title: Row(
             children: [
               const SizedBox(width: 30),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Center(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Color(0xff252F18),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -318,15 +346,15 @@ class QuizController extends GetxController {
               SvgPicture.asset(
                 isCorrect
                     ? 'assets/images/correto.svg'
-                    : 'assets/images/atencao2.svg',
-                width: 45,
+                    : 'assets/images/atencao1.svg',
+                width: 35,
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
                   message,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Color(0xff252F18),
                     fontSize: 16,
                   ),
                 ),
@@ -336,6 +364,23 @@ class QuizController extends GetxController {
         );
       },
     );
+    Color getBackgroundColor() {
+      switch (questions[questionIndex.value].fase) {
+        case 1:
+          return const Color(0xFF6EAF99);
+
+        case 2:
+          return const Color(0xFF7FAF6E);
+        case 3:
+          return const Color(0xFFD77D7D);
+        case 4:
+          return const Color(0xFFFFF1B7);
+        case 5:
+          return const Color(0xFFACE8E0);
+        default:
+          return const Color(0xFFACE8E0);
+      }
+    }
 
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pop();

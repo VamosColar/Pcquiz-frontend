@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:educagame/models/option_model.dart';
+import 'package:flutter/services.dart';
 
 class Question {
   final int id;
@@ -27,7 +30,7 @@ class Question {
     return Question(
       id: json['id'],
       title: json['title'],
-      description: json['description'],
+      description: json['description'] ?? '',
       fase: json['fase'],
       mission: json['mission'] ?? '', // Campo opcional
       explanation: json['explanation'] ?? '', // Campo opcional
@@ -37,5 +40,12 @@ class Question {
       ),
       correctAnswerIndex: json['correctAnswerIndex'],
     );
+  }
+  Uint8List? get decodedImage {
+    if (imagePath.isNotEmpty) {
+      final base64String = imagePath.split(',').last;
+      return base64Decode(base64String);
+    }
+    return null;
   }
 }

@@ -19,18 +19,8 @@ class LoginPage extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: const Color(0xFFFFF8E1), // Fundo claro
-          appBar: AppBar(
-            title: const Text(
-              'Bem-Vindo ao PcQuiz',
-              style: TextStyle(
-                  fontFamily: 'BalooThambi',
-                  fontWeight: FontWeight.w200,
-                  fontSize: 20,
-                  color: Color(0xFFD06D0B)),
-            ),
-            backgroundColor: const Color(0xFFFFB405),
-          ),
+          backgroundColor: const Color(0xFFFED295), // Fundo claro
+
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -38,42 +28,30 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 90),
+                  const SizedBox(height: 200),
                   Center(
                     child: Image.asset(
                       'assets/images/apresentacao_agente.png',
-                      height: 150,
+                      height: 220,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Para começar informe seu e-mail ou continue anonimamente!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'BalooThambi',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w200,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 60),
 
                   TextField(
                     controller: identifyController,
                     decoration: InputDecoration(
                       labelText: 'Digite seu email',
-                      hintText: 'Digite seu email ou deixe em branco',
+                      hintText: 'Digite seu email ',
                       labelStyle: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16,
+                        color: Color(0xFFD06D0B),
+                        fontSize: 18,
                         fontFamily: 'BalooThambi',
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: const Color(0xFFFED295),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      prefixIcon: const Icon(Icons.email, color: Colors.orange),
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -81,7 +59,7 @@ class LoginPage extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 8,
-                      backgroundColor: const Color(0xFFFFCD5C),
+                      backgroundColor: const Color(0xFFFFC645),
                       padding: const EdgeInsets.symmetric(
                         vertical: 15,
                         horizontal: 50,
@@ -102,7 +80,7 @@ class LoginPage extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w100,
                         decorationThickness: 2.0,
-                        color: Color(0xFFD06D0B),
+                        color: Color(0xFFC64601),
                       ),
                     ),
                   ),
@@ -112,7 +90,7 @@ class LoginPage extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 8,
-                      backgroundColor: const Color(0xFFFFB300),
+                      backgroundColor: const Color(0xFFFFEEC7),
                       padding: const EdgeInsets.symmetric(
                         vertical: 15,
                         horizontal: 50,
@@ -121,7 +99,7 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       side: const BorderSide(width: 4, color: Colors.white),
-                      shadowColor: const Color(0xFF271B0F),
+                      shadowColor: const Color(0xFFD06D0B),
                     ),
                     onPressed: () async {
                       authController.loginAnonymously();
@@ -133,7 +111,7 @@ class LoginPage extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w100,
                         decorationThickness: 2.0,
-                        color: Colors.black87,
+                        color: Color(0xFFD06D0B),
                       ),
                     ),
                   ),

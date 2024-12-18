@@ -35,9 +35,16 @@ Execute os seguintes comandos para buscar dependências:
 flutter pub get
 ```
 
+### 2.1 **Versão do Flutter**
+
+- Flutter 3.19.6 • channel stable • https://github.com/flutter/flutter.git
+- Dart 3.3.4 • DevTools 2.31.1
+
+```
 ### 3. **Estrutura do arquivo**
 
 ```
+
 lib/
 |-- app/
 | |-- category_page.dart
@@ -59,7 +66,8 @@ lib/
 |-- widgets/
 | |-- custom_btn_speed_dial.dart
 | |-- custom_progress_bar.dart
-```
+
+````
 
 ---
 
@@ -70,4 +78,4 @@ lib/
 
 ```bash
 flutter run
-```
+````
