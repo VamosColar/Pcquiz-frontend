@@ -118,7 +118,8 @@ class _HomePageState extends State<HomePage> {
                             shadowColor: const Color(0xFF271B0F),
                           ),
                           onPressed: () {
-                            quizController.fetchQuestions(category.id);
+                            quizController.fetchQuestions(
+                                category.id, category.name);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                             category.name,
                             style: const TextStyle(
                               fontFamily: 'BalooBhaijaan',
-                              fontSize: 26,
+                              fontSize: 22,
                               fontWeight: FontWeight.w400,
                               decorationThickness: 2.0,
                               color: Color(0xFF793C0B),

@@ -37,23 +37,27 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 60),
 
-                  TextField(
-                    controller: identifyController,
-                    decoration: InputDecoration(
-                      labelText: 'Digite seu email',
-                      hintText: 'Digite seu email ',
-                      labelStyle: const TextStyle(
-                        color: Color(0xFFD06D0B),
-                        fontSize: 18,
-                        fontFamily: 'BalooThambi',
+                  Container(
+                    alignment: Alignment.center,
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: identifyController,
+                      decoration: InputDecoration(
+                        labelText: 'Digite seu email',
+                        hintText: 'Digite seu email ',
+                        labelStyle: const TextStyle(
+                          color: Color(0xFFD06D0B),
+                          fontSize: 18,
+                          fontFamily: 'BalooThambi',
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xFFFED295),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      filled: true,
-                      fillColor: const Color(0xFFFED295),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      keyboardType: TextInputType.emailAddress,
                     ),
-                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(

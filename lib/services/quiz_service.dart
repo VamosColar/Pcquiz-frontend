@@ -53,6 +53,9 @@ class QuizService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         print('Resposta da API: $data');
+        if (data['message'] == null || data['message'].isEmpty) {
+          return []; // tratamento pra retornar lista vazia se nao encontra questoes
+        }
         final List<dynamic> questionsJson = data['message'];
         return questionsJson.map((q) => Question.fromJson(q)).toList();
       } else {

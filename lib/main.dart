@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pc Quiz',
-      home: LoginPage(),
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
@@ -57,6 +56,10 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/result', page: () => QuizResultPage(score: score.value)),
       ],
+      home: Obx(() {
+        final authController = Get.find<AuthController>();
+        return authController.isLoggedIn.value ? const HomePage() : LoginPage();
+      }),
     );
   }
 }

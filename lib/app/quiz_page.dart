@@ -153,10 +153,9 @@ class QuizPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: Text(
-                          question.description.isEmpty
-                              ? 'sem descrição'
-                              : question.description,
+                          child: Obx(
+                        () => Text(
+                          quizController.categoryName.value,
                           style: const TextStyle(
                             color: Color(0xFF434342),
                             fontSize: 16,
@@ -164,7 +163,7 @@ class QuizPage extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                      ),
+                      )),
                       const SizedBox(
                         height: 10,
                       ),
@@ -182,7 +181,7 @@ class QuizPage extends StatelessWidget {
                           ),
                           onPressed: () {},
                           child: Text(
-                            "Fase ${question.fase}",
+                            question.title,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Color(0xFF434342),
@@ -250,7 +249,7 @@ class QuizPage extends StatelessWidget {
                             ),
                             Flexible(
                               child: Text(
-                                question.title,
+                                question.description,
                                 softWrap: true,
                                 style: const TextStyle(
                                   fontSize: 16,
@@ -283,9 +282,13 @@ class QuizPage extends StatelessWidget {
                                 onPressed: () {
                                   quizController.checkAnswer(context, index);
                                 },
-                                child: Text(
-                                  question.options[index].resposta,
-                                  style: const TextStyle(color: Colors.black),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    question.options[index].resposta,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
                                 ),
                               ),
                             ),

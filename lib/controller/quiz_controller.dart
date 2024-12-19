@@ -46,7 +46,7 @@ class QuizController extends GetxController {
     super.onInit();
     fetchCategories().then((_) {
       if (categories.isNotEmpty) {
-        fetchQuestions(categories.first.id);
+        fetchQuestions(categories.first.id, categories.first.name);
       }
     });
   }
@@ -76,12 +76,13 @@ class QuizController extends GetxController {
   }
 
   /// Carrega perguntas de uma categoria específica
-  Future<void> fetchQuestions(int categoryId) async {
+  Future<void> fetchQuestions(int categoryId, String name) async {
     isLoading.value = true;
     try {
       questions.value = await repository.fetchQuestionsByCategory(categoryId);
       questionIndex.value = 0; // Reseta o índice da pergunta
       score.value = 0; // Reseta a pontuação
+      categoryName.value = name;
     } catch (e) {
       print('Erro ao carregar perguntas: $e');
       Get.snackbar('Erro',

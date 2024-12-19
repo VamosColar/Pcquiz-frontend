@@ -20,7 +20,7 @@ class AuthController extends GetxController {
 
   void logout() {
     isLoggedIn.value = false;
-    identify.value = 'anonimo'; // Reseta o identify
-    Get.offAllNamed('/home');
+    identify.value = '';
+    Get.offAllNamed('/');
   }
 }
