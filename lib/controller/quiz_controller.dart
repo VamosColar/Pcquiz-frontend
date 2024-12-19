@@ -204,6 +204,14 @@ class QuizController extends GetxController {
     }
   }
 
+  void moveToPreviousQuestion(context) {
+    if (questionIndex.value > 0) {
+      questionIndex.value--;
+      isShowingFeedback.value = false;
+      Navigator.of(context).pop();
+    }
+  }
+
   void showNextPhaseDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -269,6 +277,36 @@ class QuizController extends GetxController {
                 ),
                 child: const Text(
                   "Próxima Fase",
+                  style: TextStyle(
+                    fontFamily: 'BalooThambi',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w400,
+                    decorationThickness: 2.0,
+                    color: Color(0xFFD06D0B),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                // onPressed: () {
+                //   Navigator.of(context).pop();
+                //   moveToPreviousQuestion();
+                // },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFFCD5C),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  side: const BorderSide(width: 4, color: Color(0xffFFF0C3)),
+                  shadowColor: const Color(0xFF271B0F),
+                ),
+                onPressed: () => questionIndex.value > 0
+                    ? moveToPreviousQuestion(context)
+                    : null,
+                child: const Text(
+                  "Fase Anterior",
                   style: TextStyle(
                     fontFamily: 'BalooThambi',
                     fontSize: 24,
@@ -414,8 +452,11 @@ class QuizController extends GetxController {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pop();
       if (isCorrect) {
-        showNextPhaseDialog(context);
-        // moveToNextQuestion();
+        if (questionIndex.value > 0) {
+          showNextPhaseDialog(context);
+        } else {
+          moveToNextQuestion();
+        }
       } else {
         isShowingFeedback.value = false;
       }
