@@ -231,29 +231,30 @@ class QuizPage extends StatelessWidget {
                           if (question.imagePath != null &&
                               question.imagePath.isNotEmpty)
                             Expanded(
-                              child:
-                                  question.imagePath.startsWith('data:image') &&
-                                          question.imagePath.contains('base64,')
-                                      ? Image.memory(
-                                          // Decodifica a imagem em Base64
+                                child: question.imagePath
+                                            .startsWith('data:image') &&
+                                        question.imagePath.contains('base64,')
+                                    ? CircleAvatar(
+                                        radius: 100,
+                                        backgroundImage: MemoryImage(
                                           const Base64Decoder().convert(
                                             question.imagePath
                                                 .split(',')
                                                 .last
                                                 .trim(),
                                           ),
-                                          fit: BoxFit.contain,
-                                          height: 200,
-                                        )
-                                      : CachedNetworkImage(
-                                          imageUrl: question.imagePath,
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                          fit: BoxFit.contain,
                                         ),
-                            ),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 100,
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                          question.imagePath,
+                                        ),
+                                        onBackgroundImageError:
+                                            (exception, stackTrace) =>
+                                                const Icon(Icons.error),
+                                      )),
                         ],
                       ),
                       const SizedBox(height: 20),
