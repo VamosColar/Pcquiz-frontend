@@ -1,13 +1,15 @@
+import 'package:educagame/app/home_page.dart';
+import 'package:educagame/controller/quiz_controller.dart';
 import 'package:educagame/widgets/custom_btn_speed_dial.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class QuizResultPage extends StatelessWidget {
   final int score;
 
-  const QuizResultPage({required this.score});
-
+  QuizResultPage({required this.score});
+  final QuizController quizController = Get.find<QuizController>();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -25,8 +27,8 @@ class QuizResultPage extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xFFFFCD5C),
-                Color(0xFFFFCD5C),
+                Color(0xFFFED295),
+                Color(0xffFED295),
               ],
             ),
           ),
@@ -54,30 +56,30 @@ class QuizResultPage extends StatelessWidget {
                       alignment: Alignment.center,
                     ),
                     const SizedBox(height: 20),
-                    Wrap(
-                      spacing: 10,
-                      children: [
-                        for (int i = 0; i < score; i++)
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 40,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 2.0,
-                                color: Colors.white,
-                                offset: Offset(1, 2),
-                              ),
-                            ],
-                          ),
-                        const SizedBox(width: 10),
-                        Center(
-                          child: SvgPicture.asset(
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (int i = 0; i < 5; i++)
+                            const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 40,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 2.0,
+                                  color: Colors.white,
+                                  offset: Offset(1, 2),
+                                ),
+                              ],
+                            ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
                             'assets/images/smile.svg',
                             width: 140,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Container(
@@ -96,7 +98,7 @@ class QuizResultPage extends StatelessWidget {
                           RichText(
                             text: const TextSpan(
                               text:
-                                  'Se você suspeita de violência contra crianças ou adolescentes, ligue para:\n',
+                                  'Se você suspeita de violência contra crianças ou adolescentes, ligue para:\n\n',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'Inter',
@@ -109,7 +111,7 @@ class QuizResultPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Inter',
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                                 TextSpan(
@@ -117,7 +119,7 @@ class QuizResultPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Inter',
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                                 TextSpan(
@@ -125,7 +127,7 @@ class QuizResultPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Inter',
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                                 TextSpan(
@@ -133,7 +135,7 @@ class QuizResultPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Inter',
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ],
@@ -144,7 +146,7 @@ class QuizResultPage extends StatelessWidget {
                             text: const TextSpan(
                               text: 'Dicas importantes:\n',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF332C24),
@@ -157,7 +159,7 @@ class QuizResultPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontFamily: 'Inter',
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ],
@@ -176,6 +178,40 @@ class QuizResultPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 20),
+                    // Botão "Jogar"
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 8,
+                        backgroundColor: const Color(0xFFFFCD5C),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 50,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        side: const BorderSide(width: 4, color: Colors.white),
+                        shadowColor: const Color(0xFF271B0F),
+                      ),
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      },
+                      child: const Text(
+                        'Voltar ao Jogo',
+                        style: TextStyle(
+                          fontFamily: 'BalooThambi',
+                          fontSize: 26,
+                          fontWeight: FontWeight.w100,
+                          decorationThickness: 2.0,
+                          color: Color(0xFFD06D0B),
+                        ),
+                      ),
+                    ),
+
                     const SizedBox(height: 50),
                   ],
                 ),

@@ -123,9 +123,6 @@ class QuizController extends GetxController {
       }
       await sendQuizResponse(currentQuestion, selectedOption, isCorrect);
 
-      // await sendQuizResponse(
-      //     currentQuestion, currentQuestion.options[selectedIndex], isCorrect);
-
       showFeedbackDialog(
         context,
         isCorrect,
@@ -210,7 +207,6 @@ class QuizController extends GetxController {
   void showNextPhaseDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: false, // Bloqueia fechamento externo
       builder: (context) {
         return AlertDialog(
           backgroundColor: const Color(0xFFFFF5CC),
@@ -361,7 +357,7 @@ class QuizController extends GetxController {
                 child: Text(
                   title,
                   style: const TextStyle(
-                    color: Color(0xff252F18),
+                    color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -371,18 +367,26 @@ class QuizController extends GetxController {
           ),
           content: Row(
             children: [
-              SvgPicture.asset(
-                isCorrect
-                    ? 'assets/images/correto.svg'
-                    : 'assets/images/atencao1.svg',
-                width: 35,
-              ),
+              isCorrect
+                  ? SvgPicture.asset(
+                      'assets/images/correto.svg',
+                      width: 55,
+                    )
+                  : const Text(
+                      '!',
+                      style: TextStyle(
+                        fontFamily: 'AbhayaLibre-ExtraBold',
+                        fontSize: 146,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
                   message,
                   style: const TextStyle(
-                    color: Color(0xff252F18),
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),

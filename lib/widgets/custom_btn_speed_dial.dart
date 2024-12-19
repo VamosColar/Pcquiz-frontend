@@ -36,6 +36,11 @@ class CustomBtnSpeedDial extends StatelessWidget {
       foregroundColor: foregroundColor,
       children: [
         SpeedDialChild(
+            child: const Icon(Icons.arrow_back),
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor,
+            onTap: () => Navigator.of(context).pop()),
+        SpeedDialChild(
           child: const Icon(Icons.share),
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,

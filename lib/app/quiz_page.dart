@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:educagame/app/home_page.dart';
@@ -230,35 +231,42 @@ class QuizPage extends StatelessWidget {
                         children: [
                           if (question.imagePath != null &&
                               question.imagePath.isNotEmpty)
-                            Expanded(
+                            Container(
+                              width: 200,
+                              height: 200,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: ClipOval(
                                 child: question.imagePath
                                             .startsWith('data:image') &&
                                         question.imagePath.contains('base64,')
-                                    ? CircleAvatar(
-                                        radius: 100,
-                                        backgroundImage: MemoryImage(
-                                          const Base64Decoder().convert(
-                                            question.imagePath
-                                                .split(',')
-                                                .last
-                                                .trim(),
-                                          ),
+                                    ? Image.memory(
+                                        const Base64Decoder().convert(
+                                          question.imagePath
+                                              .split(',')
+                                              .last
+                                              .trim(),
                                         ),
+                                        fit: BoxFit.cover,
                                       )
-                                    : CircleAvatar(
-                                        radius: 100,
-                                        backgroundImage:
-                                            CachedNetworkImageProvider(
-                                          question.imagePath,
-                                        ),
-                                        onBackgroundImageError:
-                                            (exception, stackTrace) =>
-                                                const Icon(Icons.error),
-                                      )),
+                                    : CachedNetworkImage(
+                                        imageUrl: question.imagePath,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                              ),
+                            ),
                         ],
                       ),
                       const SizedBox(height: 20),
                       Container(
+                        height: min(220, 400),
                         decoration: BoxDecoration(
                           color: const Color(0xFFF2A557),
                           borderRadius: BorderRadius.circular(12),
@@ -267,27 +275,40 @@ class QuizPage extends StatelessWidget {
                             width: 8.0,
                           ),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Column(
                           children: [
-                            const Text(
-                              '?',
-                              style: TextStyle(
-                                fontFamily: 'AbhayaLibre-ExtraBold',
-                                fontSize: 126,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xffDE3400),
-                              ),
-                            ),
-                            Flexible(
-                              child: Text(
-                                question.description,
-                                softWrap: true,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF271B0F),
-                                ),
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.topCenter,
+                                    child: const Text(
+                                      '?',
+                                      style: TextStyle(
+                                        fontFamily: 'AbhayaLibre-ExtraBold',
+                                        fontSize: 126,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xffDE3400),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  Flexible(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        question.description,
+                                        softWrap: true,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF271B0F),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

@@ -34,6 +34,12 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: const Color(0xffDE3400),
         children: [
           SpeedDialChild(
+            child: const Icon(Icons.arrow_back),
+            backgroundColor: const Color(0xFFEAC674),
+            foregroundColor: const Color(0xffDE3400),
+            onTap: () => Navigator.of(context).pop(),
+          ),
+          SpeedDialChild(
             child: const Icon(Icons.share),
             backgroundColor: const Color(0xFFEAC674),
             foregroundColor: const Color(0xffDE3400),
