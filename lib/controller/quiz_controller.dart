@@ -281,10 +281,7 @@ class QuizController extends GetxController {
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
+                  Navigator.popUntil(context, (route) => route.isFirst);
                 },
                 style: ElevatedButton.styleFrom(
                   elevation: 6,
