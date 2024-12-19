@@ -12,21 +12,10 @@ import 'package:get/get.dart';
 class QuizPage extends StatelessWidget {
   QuizPage({super.key});
 
-  // final List<Color> backgroundColors = [
-  //   const Color(0xFF6EAF99),
-  //   const Color(0xFF7FAF6E),
-  //   const Color(0xFFD77D7D),
-  //   const Color(0xFFFFF1B7),
-  //   const Color(0xFFACE8E0),
-  // ];
-  // //Obtenho o indice da fase
-  // int getColorIndex(int currentIndex) {
-  //   return currentIndex % backgroundColors.length;
-  // }
-
   @override
   Widget build(BuildContext context) {
     final QuizController quizController = Get.find<QuizController>();
+    quizController.fetchCategories();
 
     if (quizController.quizCompleted.value) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -177,7 +166,7 @@ class QuizPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Center(
                         child: ElevatedButton(

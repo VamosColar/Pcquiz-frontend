@@ -39,24 +39,26 @@ class CategoryPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(
+                  height: 60,
+                ),
                 // Título da Categoria
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white60,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    categoryName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 26,
-                      fontFamily: 'BalooThambi',
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF793C0B),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white60,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      categoryName,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontFamily: 'BalooThambi',
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF793C0B),
+                      ),
                     ),
                   ),
                 ),

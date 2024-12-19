@@ -93,10 +93,9 @@ class QuizController extends GetxController {
 
   /// Verifica a resposta selecionada pelo usuário
   void checkAnswer(BuildContext context, int selectedIndex) async {
-    if (isShowingFeedback.value || isLoading.value)
-      return; // Evita múltiplas chamadas
+    if (isShowingFeedback.value || isLoading.value) return;
     isShowingFeedback.value = true;
-    isLoading.value = true; // Ativa o carregamento
+    isLoading.value = true;
 
     try {
       if (questionIndex.value < 0 || questionIndex.value >= questions.length) {
@@ -106,20 +105,25 @@ class QuizController extends GetxController {
 
       final currentQuestion = questions[questionIndex.value];
 
+      final selectedOption = currentQuestion.options[selectedIndex];
+      final isCorrect = selectedIndex == currentQuestion.correctAnswerIndex;
+
       // Marca a opção selecionada
       for (var option in currentQuestion.options) {
         option.isCorrect = false;
       }
       currentQuestion.options[selectedIndex].isCorrect = true;
 
-      final isCorrect = selectedIndex == currentQuestion.correctAnswerIndex;
-
       if (isCorrect) {
         score.value++;
+      } else {
+        // Envia tentativa incorreta para a API
+        await sendIncorrectAttempt(currentQuestion.id, selectedOption.id);
       }
+      await sendQuizResponse(currentQuestion, selectedOption, isCorrect);
 
-      await sendQuizResponse(
-          currentQuestion, currentQuestion.options[selectedIndex], isCorrect);
+      // await sendQuizResponse(
+      //     currentQuestion, currentQuestion.options[selectedIndex], isCorrect);
 
       showFeedbackDialog(
         context,
@@ -152,6 +156,29 @@ class QuizController extends GetxController {
       Get.snackbar(
         'Erro',
         'Falha ao enviar a resposta. Verifique sua conexão.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> sendIncorrectAttempt(int questionId, int optionId) async {
+    try {
+      final identify = authController.identify.value.isNotEmpty
+          ? authController.identify.value
+          : 'anonimo';
+
+      await repository.submitIncorrectAttempt(
+        questionId: questionId,
+        optionId: optionId,
+        identify: identify,
+      );
+
+      print('Tentativa incorreta enviada com sucesso');
+    } catch (e) {
+      print('Erro ao enviar tentativa incorreta: $e');
+      Get.snackbar(
+        'Erro',
+        'Falha ao registrar tentativa incorreta. Verifique sua conexão.',
         snackPosition: SnackPosition.BOTTOM,
       );
     }

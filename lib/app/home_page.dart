@@ -67,78 +67,85 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Container(
-        color: const Color(0xffFECF6A),
-        child: Center(
-          child: Obx(() {
-            if (quizController.isLoading.value) {
-              return const CircularProgressIndicator();
-            }
+      body: SingleChildScrollView(
+        child: Container(
+          color: const Color(0xffFECF6A),
+          child: Center(
+            child: Obx(() {
+              if (quizController.isLoading.value) {
+                return const CircularProgressIndicator();
+              }
 
-            if (quizController.categories.isEmpty) {
-              return const Text(
-                "Nenhuma missão disponível",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
+              if (quizController.categories.isEmpty) {
+                return const Text(
+                  "Nenhuma missão disponível",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                );
+              }
+
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 120,
+                  ),
+                  Image.asset('assets/images/agente.png'),
+                  const SizedBox(height: 20),
+                  ...quizController.categories.map((category) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 12),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 6,
+                            backgroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 30,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            side: const BorderSide(
+                              width: 4,
+                              color: Color(0xffF2A261),
+                            ),
+                            shadowColor: const Color(0xFF271B0F),
+                          ),
+                          onPressed: () {
+                            quizController.fetchQuestions(category.id);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CategoryPage(
+                                        categoryName: category.name,
+                                        categoryId: category.id,
+                                      )),
+                            );
+                          },
+                          child: Text(
+                            category.name,
+                            style: const TextStyle(
+                              fontFamily: 'BalooBhaijaan',
+                              fontSize: 26,
+                              fontWeight: FontWeight.w400,
+                              decorationThickness: 2.0,
+                              color: Color(0xFF793C0B),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ],
               );
-            }
-
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/agente.png'),
-                const SizedBox(height: 20),
-                ...quizController.categories.map((category) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 6,
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 30,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        side: const BorderSide(
-                          width: 4,
-                          color: Color(0xffF2A261),
-                        ),
-                        shadowColor: const Color(0xFF271B0F),
-                      ),
-                      onPressed: () {
-                        quizController.fetchQuestions(category.id);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CategoryPage(
-                                    categoryName: category
-                                        .name, // Passando o nome da categoria
-                                    categoryId: category.id,
-                                  ) // Passando o ID da categoria),
-                              ),
-                        );
-                      },
-                      child: Text(
-                        category.name,
-                        style: const TextStyle(
-                          fontFamily: 'BalooBhaijaan',
-                          fontSize: 26,
-                          fontWeight: FontWeight.w400,
-                          decorationThickness: 2.0,
-                          color: Color(0xFF793C0B),
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ],
-            );
-          }),
+            }),
+          ),
         ),
       ),
     );

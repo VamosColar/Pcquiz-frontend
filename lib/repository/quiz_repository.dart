@@ -31,7 +31,20 @@ class QuizRepository {
       identify: identify,
     );
   }
+
+  Future<void> submitIncorrectAttempt({
+    required int questionId,
+    required int optionId,
+    required String identify,
+  }) async {
+    await quizService.submitIncorrectAttempt(
+      questionId: questionId,
+      optionId: optionId,
+      identify: identify,
+    );
+  }
 }
+
 
 
 

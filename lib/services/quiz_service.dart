@@ -99,4 +99,39 @@ class QuizService {
       rethrow;
     }
   }
+
+  // Enviar tentativa incorreta
+  Future<void> submitIncorrectAttempt({
+    required int questionId,
+    required int optionId,
+    required String identify,
+  }) async {
+    final url = Uri.parse('$baseUrl/answers');
+    final body = json.encode({
+      'questionId': questionId,
+      'optionId': optionId,
+      'identify': identify,
+    });
+
+    print('Tentativa incorreta: $body');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        print('Tentativa incorreta registrada com sucesso');
+      } else {
+        print(
+            'Erro HTTP ao registrar tentativa incorreta: ${response.statusCode} - ${response.body}');
+        throw Exception('Erro ao registrar tentativa incorreta');
+      }
+    } catch (e) {
+      print('Erro ao registrar tentativa incorreta: $e');
+      rethrow;
+    }
+  }
 }
