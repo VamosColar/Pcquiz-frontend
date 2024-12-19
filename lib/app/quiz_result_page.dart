@@ -1,5 +1,6 @@
 import 'package:educagame/widgets/custom_btn_speed_dial.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class QuizResultPage extends StatelessWidget {
@@ -53,30 +54,30 @@ class QuizResultPage extends StatelessWidget {
                       alignment: Alignment.center,
                     ),
                     const SizedBox(height: 20),
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (int i = 0; i < score; i++)
-                            const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 40,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                  offset: Offset(1, 2),
-                                ),
-                              ],
-                            ),
-                          const SizedBox(width: 10),
-                          SvgPicture.asset(
+                    Wrap(
+                      spacing: 10,
+                      children: [
+                        for (int i = 0; i < score; i++)
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 40,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 2.0,
+                                color: Colors.white,
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
+                        const SizedBox(width: 10),
+                        Center(
+                          child: SvgPicture.asset(
                             'assets/images/smile.svg',
                             width: 140,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     Container(

@@ -28,12 +28,43 @@ class QuizPage extends StatelessWidget {
     }
 
     return Obx(() {
-      // final backgroundColor =
-      // backgroundColors[getColorIndex(quizController.questionIndex.value)];
-      // final currentQuestion = quizController.questions[quizController.questionIndex.value];
+      if (quizController.isLoading.value) {
+        // Verifica o estado de carregamento
+        return const Center(child: CircularProgressIndicator());
+      } else if (quizController.questions.isEmpty) {
+        return Container(
+          color: Colors.amber,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Nenhuma pergunta encontrada para esta categoria.", // Mensagem informativa
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    quizController.fetchQuestions(
+                        quizController.categories.first.id,
+                        quizController
+                            .categories.first.name); // Tenta recarregar
+                  },
+                  child: const Text("Tentar Novamente"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.back(); // Navega para a tela anterior
+                  },
+                  child: const Text("Voltar"),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
 
-      // final backgroundColor = backgroundColors[
-      //     quizController.currentPhase.value % backgroundColors.length];
       final backgroundColor = quizController.backgroundColor;
       final question =
           quizController.questions[quizController.questionIndex.value];
