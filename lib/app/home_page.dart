@@ -1,6 +1,6 @@
-import 'package:educagame/controller/quiz_controller.dart';
 import 'package:educagame/app/category_page.dart';
 import 'package:educagame/controller/auth_controller.dart';
+import 'package:educagame/controller/quiz_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
@@ -95,9 +95,7 @@ class _HomePageState extends State<HomePage> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 120,
-                  ),
+                  const SizedBox(height: 120),
                   Image.asset('assets/images/agente.png'),
                   const SizedBox(height: 20),
                   ...quizController.categories.map((category) {
@@ -149,6 +147,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   }).toList(),
+                  const SizedBox(height: 50),
                 ],
               );
             }),

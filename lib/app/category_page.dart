@@ -1,9 +1,9 @@
+import 'package:educagame/app/quiz_page.dart';
 import 'package:educagame/controller/quiz_controller.dart';
 import 'package:educagame/widgets/custom_btn_speed_dial.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'quiz_page.dart';
 
 class CategoryPage extends StatelessWidget {
   final String categoryName;
@@ -40,9 +40,7 @@ class CategoryPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 60,
-                  ),
+                  const SizedBox(height: 60),
                   // Título da Categoria
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -97,10 +95,12 @@ class CategoryPage extends StatelessWidget {
                     ),
                     onPressed: () async {
                       quizController.fetchQuestions(categoryId, categoryName);
+                      // if (!quizController.isLoading.value) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => QuizPage()),
                       );
+                      // }
                     },
                     child: const Text(
                       'JOGAR',

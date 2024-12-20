@@ -189,11 +189,8 @@ class QuizResultPage extends StatelessWidget {
                       side: const BorderSide(width: 4, color: Colors.white),
                       shadowColor: const Color(0xFF271B0F),
                     ),
-                    onPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
+                    onPressed: () {
+                      quizController.resetQuiz();
                     },
                     child: const Text(
                       'Voltar ao Jogo',

@@ -44,11 +44,12 @@ class QuizController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCategories().then((_) {
-      if (categories.isNotEmpty) {
-        fetchQuestions(categories.first.id, categories.first.name);
-      }
-    });
+    fetchCategories();
+    // .then((_) {
+    //   if (categories.isNotEmpty) {
+    //     fetchQuestions(categories.first.id, categories.first.name);
+    //   }
+    // });
   }
 
   @override
@@ -56,6 +57,7 @@ class QuizController extends GetxController {
     ever(questionIndex, (callback) {
       if (questions.isNotEmpty) {
         currentPhase.value = questions[questionIndex.value].fase;
+        print("fase atual $questions");
       }
     });
     super.onReady();
@@ -90,6 +92,16 @@ class QuizController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void resetQuiz() {
+    questionIndex.value = 0;
+    currentPhase.value = 0;
+    score.value = 0;
+    questions.clear();
+    isShowingFeedback.value = false;
+    quizCompleted.value = false;
+    Get.offAll(HomePage());
   }
 
   /// Verifica a resposta selecionada pelo usuário
