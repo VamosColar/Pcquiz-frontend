@@ -266,7 +266,7 @@ class QuizPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Container(
-                        height: min(220, 400),
+                        height: 148,
                         decoration: BoxDecoration(
                           color: const Color(0xFFF2A557),
                           borderRadius: BorderRadius.circular(12),
@@ -277,39 +277,35 @@ class QuizPage extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            Expanded(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.topCenter,
-                                    child: const Text(
-                                      '?',
-                                      style: TextStyle(
-                                        fontFamily: 'AbhayaLibre-ExtraBold',
-                                        fontSize: 126,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  '?',
+                                  style: TextStyle(
+                                      fontFamily: 'AbhayaLibre-ExtraBold',
+                                      fontSize: 126,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xffDE3400),
+                                      height: 1.0),
+                                ),
+                                Flexible(
+                                  child: Container(
+                                    height: 132,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      question.description,
+                                      softWrap: true,
+                                      style: const TextStyle(
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        color: Color(0xffDE3400),
+                                        color: Color(0xFF271B0F),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 8.0),
-                                  Flexible(
-                                    child: Container(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        question.description,
-                                        softWrap: true,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xFF271B0F),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -338,9 +334,13 @@ class QuizPage extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
-                                  child: Text(
-                                    question.options[index].resposta,
-                                    style: const TextStyle(color: Colors.black),
+                                  child: Center(
+                                    child: Text(
+                                      question.options[index].resposta,
+                                      textAlign: TextAlign.center,
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                 ),
                               ),
